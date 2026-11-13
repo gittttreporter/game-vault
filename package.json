@@ -1,0 +1,21 @@
+{
+  "name": "game-vault",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private, password-protected game distribution site for a small circle of friends.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "create-user": "node scripts/create-user.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.9",
+    "astro": "^5.1.1",
+    "tailwindcss": "^4.0.9"
+  }
+}

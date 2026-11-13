@@ -1,0 +1,33 @@
+---
+// GitHub Pages has no server-side rewrites, so deep links (/game/slug) land
+// here. This page translates them into the SPA's query-param routes.
+// Astro bakes the real base path in at build time.
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting… · THE VAULT</title>
+    <script is:inline define:vars={{ base }}>
+      (function () {
+        var path = location.pathname;
+        if (base !== '/' && path.indexOf(base) === 0) path = path.slice(base.length);
+        var m = path.match(/^\/game\/(.+?)(\/index\.html)?\/?$/);
+        var dest;
+        if (m) {
+          dest = base + 'game/?g=' + encodeURIComponent(m[1]) + location.search;
+        } else if (location.hash && location.hash.length > 1) {
+          dest = base + location.hash;
+        } else {
+          dest = base;
+        }
+        location.replace(dest);
+      })();
+    </script>
+  </head>
+  <body style="background:#07070d;color:#00e5ff;font-family:monospace;display:grid;place-items:center;height:100vh">
+    <p>⟳ rerouting signal…</p>
+  </body>
+</html>

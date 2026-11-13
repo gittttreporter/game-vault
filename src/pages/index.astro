@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="The Library · THE VAULT" active="library">
+  <section id="library-root" class="min-h-[60vh]">
+    <div class="mb-5 flex items-end justify-between flex-wrap gap-3">
+      <div>
+        <h1 class="heading-font text-2xl font-black glow-cyan">◈ THE LIBRARY</h1>
+        <p class="text-xs text-[color:var(--color-ink-dim)] mt-1" id="result-count">initializing signal…</p>
+      </div>
+    </div>
+
+    <div id="controls" class="panel panel-brass mb-6 p-4 space-y-3 hidden">
+      <div class="flex flex-wrap gap-2 items-center">
+        <input id="search" class="input max-w-xs flex-1 min-w-[14rem]" type="search"
+               placeholder="⌕ search title / description / tags…" autocomplete="off" />
+        <select id="platform" class="input w-40">
+          <option value="all">Platform: any</option>
+          <option value="windows">Windows</option>
+          <option value="linux">Linux</option>
+          <option value="macos">macOS</option>
+          <option value="android">Android</option>
+        </select>
+        <select id="sort" class="input w-56">
+          <option value="title-asc">Sort: Title A–Z</option>
+          <option value="title-desc">Sort: Title Z–A</option>
+          <option value="newest">Sort: Newest release</option>
+          <option value="updated">Sort: Recently updated</option>
+        </select>
+        <select id="group-tag" class="input w-48">
+          <option value="">Group: none</option>
+        </select>
+      </div>
+      <div class="flex flex-wrap gap-1.5 items-center" id="tag-bar">
+        <span class="heading-font text-[10px] uppercase tracking-widest text-[color:var(--color-ink-dim)] mr-1">Tags:</span>
+        <button id="tag-mode" class="btn btn-sm btn-magenta" title="Toggle between matching ANY or ALL selected tags">match: ANY</button>
+        <span id="tag-chips" class="flex flex-wrap gap-1.5"></span>
+      </div>
+    </div>
+
+    <div id="state-loading" class="py-20 text-center">
+      <p class="heading-font text-sm glow-cyan animate-pulse">◈ loading the vault…</p>
+    </div>
+    <div id="state-error" class="panel p-8 text-center hidden">
+      <p class="glow-magenta heading-font text-sm">✖ failed to load</p>
+      <p id="error-detail" class="mt-2 text-sm text-[color:var(--color-ink-dim)]"></p>
+    </div>
+    <div id="state-empty" class="py-20 text-center hidden">
+      <p class="heading-font text-sm text-[color:var(--color-ink-dim)]">◇ no cartridges match this query</p>
+    </div>
+    <div id="grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"></div>
+    <div id="grouped" class="space-y-8"></div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/library.js';
+</script>

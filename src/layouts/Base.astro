@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { SITE, configMissing } from '../lib/config.js';
+
+const base = import.meta.env.BASE_URL;
+const { title = SITE.name, active = '' } = Astro.props;
+const navClass = (key: string) => [
+  'heading-font px-3 py-1 text-[11px] uppercase tracking-widest transition-colors',
+  active === key ? 'text-[color:var(--color-neon-cyan)] glow-cyan' : 'text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-neon-cyan)]',
+];
+---
+<!doctype html>
+<html lang="en" class="crt-flicker">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="base-url" content={base} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body class="antialiased">
+    <!-- CRT overlays -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="crt-vignette" aria-hidden="true"></div>
+
+    {configMissing && (
+      <div class="panel panel-brass mx-auto mt-4 max-w-3xl px-4 py-3 text-sm" style="border-color:#b4562f">
+        <strong class="text-[color:var(--color-neon-magenta)]">⚠ Configuration missing.</strong>
+        Set <code class="text-[color:var(--color-neon-green)]">PUBLIC_SUPABASE_URL</code> and
+        <code class="text-[color:var(--color-neon-green)]">PUBLIC_SUPABASE_ANON_KEY</code>
+        in your <code>.env</code> (local) or GitHub Actions secrets (deploy). See README.
+      </div>
+    )}
+
+    <header class="sticky top-0 z-50 border-b border-[color:var(--color-line)] bg-[color:var(--color-void-deep)]/90 backdrop-blur">
+      <nav class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-2 gap-y-1 px-4 py-2.5">
+        <a href={base} class="flex items-center gap-2 mr-3 group">
+          <svg class="spin-slow w-6 h-6" viewBox="0 0 64 64" aria-hidden="true">
+            <g fill="none" stroke-width="3">
+              <circle cx="32" cy="32" r="22" stroke="#c9a227" />
+              <circle cx="32" cy="32" r="9" stroke="#ff2bd6" />
+              <circle cx="32" cy="32" r="3" fill="#00e5ff" />
+              <g stroke="#c9a227">
+                <path d="M32 6v8M32 50v8M6 32h8M50 32h8M14 14l6 6M50 14l-6 6M14 50l6-6M50 50l-6-6"/>
+              </g>
+            </g>
+          </svg>
+          <span class="heading-font text-sm font-bold glow-cyan group-hover:opacity-80">{SITE.name}</span>
+        </a>
+        <div class="flex items-center gap-1 flex-1 min-w-0">
+          <a href={base} class:list={navClass('library')}>Library</a>
+          <a id="nav-admin" href={`${base}admin/`} class:list={navClass('admin'), 'hidden', 'text-[color:var(--color-brass)] hover:text-[color:var(--color-neon-cyan)]'}>⚙ Admin</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="nav-user" class="hidden text-xs text-[color:var(--color-ink-dim)]"></span>
+          <button id="nav-logout" class="btn btn-sm btn-brass hidden">Logout</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-6">
+      <slot />
+    </main>
+
+    <footer class="mx-auto max-w-7xl px-4 pb-10 pt-4 text-center text-xs text-[color:var(--color-ink-dim)]">
+      <div class="rule-brass mx-auto mb-4 max-w-xs"></div>
+      <p>{SITE.tagline}</p>
+      <p class="mt-1 opacity-60">all titles are original works · unauthorized access will be logged</p>
+    </footer>
+
+    <script>
+      import '../scripts/nav.js';
+    </script>
+  </body>
+</html>

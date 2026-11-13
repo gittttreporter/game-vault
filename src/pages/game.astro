@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Game · THE VAULT" active="library">
+  <section class="min-h-[70vh]">
+    <p><a href={base} class="heading-font text-xs text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-neon-cyan)]">← back to the library</a></p>
+
+    <div id="state-loading" class="py-24 text-center">
+      <p class="heading-font text-sm glow-cyan animate-pulse">◈ retrieving cartridge…</p>
+    </div>
+    <div id="state-error" class="panel p-8 text-center hidden">
+      <p class="glow-magenta heading-font text-sm">✖ cartridge not found</p>
+      <p id="error-detail" class="mt-2 text-sm text-[color:var(--color-ink-dim)]"></p>
+    </div>
+
+    <div id="detail" class="hidden"></div>
+    <div id="gallery" class="mt-6 hidden"></div>
+    <div id="comments" class="panel mt-8 p-6"></div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/gameDetail.js';
+</script>
